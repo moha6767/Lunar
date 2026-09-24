@@ -719,6 +719,10 @@ async function removeEmptyLegacyThumbnailFolder() {
 async function localThumbnailFfmpeg() {
   if (localThumbnailFfmpegReady) return localThumbnailFfmpegReady;
   localThumbnailFfmpegReady = (async () => {
+    const bundled = app.isPackaged
+      ? path.join(process.resourcesPath, 'ffmpeg.bin')
+      : path.join(__dirname, 'node_modules', 'ffmpeg-static', 'ffmpeg.exe');
+    if (fssync.existsSync(bundled)) return bundled;
     try {
       const system = await spawnCapture('ffmpeg', ['-version']);
       if (system.code === 0) return 'ffmpeg';

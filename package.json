@@ -6,6 +6,9 @@
   "author": "Affi",
   "license": "UNLICENSED",
   "private": true,
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0"
+  },
   "scripts": {
     "start": "electron .",
     "package:windows": "electron-builder --win --dir --x64",
@@ -40,6 +43,10 @@
       {
         "from": "playlist_downloader_lunar.py",
         "to": "playlist_downloader_lunar.py"
+      },
+      {
+        "from": "node_modules/ffmpeg-static/ffmpeg.exe",
+        "to": "ffmpeg.bin"
       }
     ],
     "win": {
