@@ -1,0 +1,66 @@
+{
+  "name": "lunar",
+  "version": "2.3.9",
+  "description": "Lunar – Windows-App für passives Lernen mit Videokurs-Bibliothek, YouTube-Playlist-Import, persistentem Fortschritt und Lernkalender",
+  "main": "main.js",
+  "author": "Affi",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "package:windows": "electron-builder --win --dir --x64",
+    "build:windows": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "31.7.7",
+    "electron-builder": "26.0.12"
+  },
+  "build": {
+    "appId": "com.affi.lunar",
+    "productName": "Lunar",
+    "artifactName": "Lunar-Setup-${version}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "app.js",
+      "index.html",
+      "main.js",
+      "preload.js",
+      "styles.css",
+      "package.json",
+      "!dist{,/**/*}",
+      "!build{,/**/*}"
+    ],
+    "extraResources": [
+      {
+        "from": "build/icon.ico",
+        "to": "lunar-icon.ico"
+      },
+      {
+        "from": "playlist_downloader_lunar.py",
+        "to": "playlist_downloader_lunar.py"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Lunar",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

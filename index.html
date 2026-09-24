@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Lunar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="ambient ambient-three"></div>
+  <header class="window-titlebar" aria-label="Fensterleiste">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Lunar</span>
+    </div>
+  </header>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button class="icon-button" id="activityButton" type="button" aria-label="Lernkalender öffnen" title="Lernkalender">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 10h18"/><path d="M7.5 14h.01m4.49 0h.01m4.49 0h.01M7.5 17.5h.01m4.49 0h.01"/></svg>
+        </button>
+        <button class="icon-button background-import-button" id="backgroundImportButton" type="button" aria-label="Import und Warteschlange öffnen" title="Import und Warteschlange">
+          <svg class="queue-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+          <span id="backgroundImportLabel">IMPORT LÄUFT</span>
+          <strong id="backgroundImportText">Playlist wird vorbereitet …</strong>
+          <i id="backgroundImportPercent">0%</i>
+        </button>
+        <button class="icon-button refresh-icon-button" id="refreshButton" type="button" aria-label="Kurs aktualisieren" title="Kurs aktualisieren">
+          <svg class="refresh-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M6.1 9a7 7 0 0 1 11.5-2.4L20 9M4 15l2.4 2.4A7 7 0 0 0 17.9 15"/></svg>
+        </button>
+        <button class="icon-button" id="themeButton" type="button" aria-label="Design wechseln" title="Hell/Dunkel wechseln">
+          <svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 15.2A8.6 8.6 0 0 1 8.8 3.8 8.7 8.7 0 1 0 20.2 15.2Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero glass-card">
+        <div class="hero-copy">
+          <p class="eyebrow">PASSIVES LERNEN</p>
+          <h1>Dein Kurs.<br><em>Dein Fortschritt.</em></h1>
+          <p class="sub">Videokurs auswählen, Kapitel automatisch erkennen und genau sehen, welche Teile deiner Videos du wirklich schon angesehen hast.</p>
+        </div>
+        <div class="hero-progress">
+          <div class="ringbox">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring-track" cx="60" cy="60" r="50"/><circle id="heroRing" class="ring-fill" cx="60" cy="60" r="50"/></svg>
+            <strong id="heroPercent">0%</strong>
+          </div>
+          <div><b id="heroTitle">Noch kein Videokurs</b><span id="heroDetail">Wähle unten deinen Videokurs aus.</span></div>
+        </div>
+      </section>
+
+      <section class="folder-panel glass-card">
+        <div class="panel-icon" aria-hidden="true">🎓</div>
+        <div class="panel-copy">
+          <h2 id="folderTitle">Videokurs auswählen</h2>
+          <p id="folderPath">Lokalen Kursordner öffnen oder eine YouTube-Playlist direkt in Lunar laden.</p>
+        </div>
+        <div class="panel-actions">
+          <button class="secondary-button course-action-button" id="importCourseButton" type="button"><span>Videokurs importieren</span></button>
+          <button class="primary-button course-action-button" id="chooseCourseButton" type="button"><span>Videokurs auswählen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+        </div>
+      </section>
+
+      <section class="stats" id="statsPanel" aria-label="Lernstatistik">
+        <article class="glass-card"><span class="stat-label">VIDEOS</span><strong id="statVideos">0</strong><small>im ausgewählten Kurs</small></article>
+        <article class="glass-card" id="chapterStat"><span class="stat-label">KAPITEL</span><strong id="statChapters">0</strong><small>automatisch erkannte Abschnitte</small></article>
+        <article class="glass-card"><span class="stat-label">ANGESEHEN</span><strong id="statWatched">0 Min</strong><small>tatsächlich abgespielte Zeit</small></article>
+        <article class="glass-card"><span class="stat-label">ABGESCHLOSSEN</span><strong id="statCompleted">0</strong><small>Videos mit mindestens 95%</small></article>
+      </section>
+
+      <div class="section-heading">
+        <div><p class="eyebrow">AKTUELLER VIDEOKURS</p><h2 id="libraryHeading">Kurse & Kapitel</h2></div>
+        <span id="videoCount" class="count-pill">0 Videos</span>
+      </div>
+      <section id="library" class="library" aria-live="polite"></section>
+    </main>
+    <footer>Lunar · Passives Lernen · Fortschritt & Lernkalender liegen lokal unter Videos\Lunar.</footer>
+  </div>
+
+  <div id="coursePickerModal" class="modal-backdrop" hidden>
+    <section class="course-picker" role="dialog" aria-modal="true" aria-labelledby="coursePickerTitle">
+      <div class="modal-head">
+        <div class="modal-title-copy"><p class="eyebrow">LUNAR BIBLIOTHEK</p><h2 id="coursePickerTitle">Videokurs auswählen</h2><p id="storagePath">Deine Lunar-Daten werden lokal gespeichert.</p></div>
+        <button class="modal-close" id="coursePickerClose" type="button" aria-label="Fenster schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+      </div>
+
+      <div class="course-source-grid" id="courseSourceGrid">
+        <button class="course-source-card glass-card" id="chooseFolderOption" type="button">
+          <span class="source-icon" aria-hidden="true">📁</span>
+          <span><b>Ordner auswählen</b><small>Vorhandenen Videokurs auf deinem PC verwenden.</small></span>
+          <i>→</i>
+        </button>
+        <button class="course-source-card glass-card" id="youtubeOption" type="button">
+          <span class="source-icon youtube-icon" aria-hidden="true">▶️</span>
+          <span><b>YouTube-Playlist</b><small>Playlist-Link einfügen und direkt in Lunar speichern.</small></span>
+          <i>→</i>
+        </button>
+      </div>
+
+      <section id="youtubePanel" class="youtube-panel glass-card" hidden>
+        <div><span class="stat-label">YOUTUBE-PLAYLIST</span><h3>Playlist-Link einfügen</h3><p>Lunar lädt sie automatisch nach <b>Videos\Lunar\Courses</b>. Mehrere Playlisten laufen nacheinander im Hintergrund – während du weiterlernst.</p></div>
+        <div class="playlist-form">
+          <input id="playlistUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/playlist?list=…" autocomplete="off">
+          <select id="playlistQuality" aria-label="Downloadqualität">
+            <option value="compact">Platzsparend · 720p</option>
+            <option value="balanced" selected>Smart · bis 1080p</option>
+            <option value="high">Hohe Qualität · 1440p</option>
+            <option value="audiobook">Hörbücher · Audio + Thumbnail</option>
+          </select>
+          <button class="primary-button" id="downloadPlaylistButton" type="button">In Warteschlange</button>
+        </div>
+        <div id="playlistDownloadStatus" class="download-status" role="status" aria-live="polite" hidden>
+          <div><span id="playlistStatusText">Playlist wird vorbereitet …</span><strong id="playlistStatusPercent">0%</strong></div>
+          <div class="progress-track"><i id="playlistStatusFill"></i></div>
+          <div class="download-status-actions"><small>Abgebrochene Downloads lassen sich später fortsetzen.</small><button class="quiet-button cancel-download-button" id="cancelPlaylistButton" type="button" hidden>Abbrechen</button></div>
+        </div>
+        <section id="playlistQueuePanel" class="playlist-queue" aria-live="polite" hidden>
+          <div class="playlist-queue-head"><strong id="playlistQueueSummary">Keine Imports aktiv</strong></div>
+          <div id="playlistQueueItems" class="playlist-queue-items"></div>
+        </section>
+      </section>
+
+      <section class="saved-courses-section" id="savedCoursesSection">
+        <div class="picker-section-head">
+          <div><span class="stat-label">GESPEICHERT</span><h3>Deine Videokurse</h3></div>
+          <div class="storage-actions">
+            <button class="quiet-button" id="openStorageButton" type="button">Lunar-Ordner öffnen</button>
+            <button class="quiet-button" id="moveStorageButton" type="button">Speicherort ändern</button>
+          </div>
+        </div>
+        <div id="savedCourses" class="saved-courses"></div>
+        <div id="noSavedCourses" class="picker-empty">Noch kein gespeicherter Videokurs.</div>
+      </section>
+    </section>
+  </div>
+
+  <div id="activityModal" class="modal-backdrop activity-backdrop" hidden>
+    <section class="activity-modal" role="dialog" aria-modal="true" aria-labelledby="activityTitle">
+      <div class="modal-head activity-head">
+        <div class="modal-title-copy"><p class="eyebrow">LUNAR · LERNKALENDER</p><h2 id="activityTitle">Deine Lernzeit</h2><p>Sieh, wie viel du an jedem Tag tatsächlich in Lunar angesehen hast – über alle Videokurse hinweg.</p></div>
+        <button class="modal-close" id="activityClose" type="button" aria-label="Kalender schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+      </div>
+
+      <section class="activity-summary">
+        <article><span id="activityDayLabel">HEUTE</span><strong id="activityToday">0 Min</strong><small>aktive Wiedergabe</small></article>
+        <article><span id="activityMonthLabel">DIESER MONAT</span><strong id="activityMonth">0 Min</strong><small>aktive Wiedergabe</small></article>
+        <article><span>VIDEOS</span><strong id="activityVideos">0</strong><small id="activityVideosDetail">diesen Monat angesehen</small></article>
+        <article><span>ABGESCHLOSSEN</span><strong id="activityCompleted">0</strong><small id="activityCompletedDetail">diesen Monat</small></article>
+      </section>
+
+      <section class="trend-card">
+        <div class="trend-head"><div><span>LETZTE 14 TAGE</span><strong id="trendTotal">0 Min</strong></div><small>Höhere Balken = mehr Lernzeit</small></div>
+        <div id="activityTrend" class="activity-trend"></div>
+      </section>
+
+      <div class="calendar-toolbar">
+        <button class="calendar-nav" id="calendarPrev" type="button" aria-label="Vorheriger Monat">‹</button>
+        <h3 id="calendarMonthLabel"></h3>
+        <button class="calendar-nav" id="calendarNext" type="button" aria-label="Nächster Monat">›</button>
+      </div>
+      <div class="calendar-weekdays" aria-hidden="true"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div>
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <section class="activity-day-panel">
+        <div class="activity-day-head"><div><span id="selectedDayEyebrow">HEUTE</span><h3 id="selectedDayLabel"></h3></div><strong id="selectedDayCount">0 Min · 0 Videos</strong></div>
+        <div id="activityList" class="activity-list"></div>
+      </section>
+      <p class="history-note">Ab Lunar 1.3 wird deine Lernzeit tagesgenau protokolliert. Bereits vorhandener Gesamtfortschritt bleibt gespeichert, lässt sich aber nicht rückwirkend zuverlässig einem bestimmten Tag zuordnen.</p>
+    </section>
+  </div>
+
+  <div id="videoModal" class="modal-backdrop" hidden>
+    <section class="video-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div class="modal-title-copy"><p class="eyebrow" id="modalChapter">KAPITEL</p><h2 id="modalTitle">Video</h2><p id="modalPath"></p></div>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Video schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+      </div>
+
+      <div class="viewer-layout">
+        <div class="player-shell is-paused">
+          <video id="coursePlayer" playsinline preload="metadata"></video>
+          <button class="player-center-play" id="playerCenterPlay" type="button" aria-label="Video abspielen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.7v10.6L17.2 12 9 6.7Z"/></svg>
+          </button>
+          <div class="player-controls" id="playerControls">
+            <input class="player-seek" id="playerSeek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Videoposition">
+            <div class="player-control-row">
+              <button class="player-control-button" id="playerPlay" type="button" aria-label="Video abspielen">
+                <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.7v10.6L17.2 12 9 6.7Z"/></svg>
+                <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h3v12H8V6Zm5 0h3v12h-3V6Z"/></svg>
+              </button>
+              <span class="player-time"><strong id="playerCurrentTime">0:00</strong><i>/</i><span id="playerDuration">0:00</span></span>
+              <span class="player-spacer"></span>
+              <button class="player-control-button" id="playerMute" type="button" aria-label="Ton ausschalten">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3V7l-4 3H5Zm9.5-.9a4 4 0 0 1 0 5.8M16.7 7a7 7 0 0 1 0 10"/></svg>
+              </button>
+              <input class="player-volume" id="playerVolume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Lautstärke">
+              <button class="player-control-button" id="playerPip" type="button" aria-label="Bild-in-Bild">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm9 6h5v4h-5v-4Z"/></svg>
+              </button>
+              <button class="player-control-button" id="playerFullscreen" type="button" aria-label="Vollbild">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="playerFeedback" class="player-feedback" aria-live="polite"></div>
+        </div>
+        <aside class="progress-panel glass-card">
+          <div class="progress-overview">
+            <div class="progress-heading">
+              <span class="stat-label">DEIN FORTSCHRITT</span>
+              <div class="big-progress"><strong id="modalPercent">0%</strong><span id="modalTime">Bis 00:00 angesehen</span></div>
+            </div>
+            <section class="watched-map-card">
+              <div class="watched-map-head"><strong>Tatsächlich angesehene Stellen</strong><small>Übersprungene Stellen zählen nicht automatisch.</small></div>
+              <div class="watched-map" id="watchedMap"></div>
+            </section>
+          </div>
+          <div class="progress-tools">
+            <div class="autoplay-next" id="autoplayNext">
+              <div class="autoplay-icon" aria-hidden="true">☾</div>
+              <div><span>AUTO-WEITER</span><strong id="nextVideoName">Letztes Video im Kurs</strong></div>
+            </div>
+            <div class="manual-progress">
+              <div><span>MANUELL NACHTRAGEN</span><strong id="manualTimeLabel">00:00</strong></div>
+              <input id="manualPosition" type="range" min="0" max="0" step="1" value="0" aria-label="Zeitstempel für den Fortschritt auswählen">
+              <label class="manual-time-input"><span>ZEITSTEMPEL</span><input id="manualTimeInput" type="text" inputmode="numeric" value="00:00" placeholder="z. B. 12:30" aria-label="Zeitstempel in Minuten und Sekunden"></label>
+            </div>
+            <div class="progress-actions">
+              <button class="secondary-button" id="markCompleteButton" type="button">Als vollständig angesehen</button>
+              <button class="danger-button" id="resetProgressButton" type="button">Fortschritt zurücksetzen</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
